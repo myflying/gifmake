@@ -1,0 +1,71 @@
+/* pages/gifmake/gifmake.wxss */
+
+page {
+  width: 100%;
+  background: #f1f1f1;
+}
+
+.gif-show {
+  width: 100%;
+  display: flex;
+  margin-top: 30rpx;
+  margin-bottom: 30rpx;
+  justify-content: center;
+}
+
+.gif-img {
+  margin-top: 20rpx;
+  width: 460rpx;
+  height: auto;
+}
+
+.content-show {
+  margin: 20rpx;
+  background: white;
+  border-radius: 6rpx;
+}
+
+.sens-view {
+  height: 155rpx;
+}
+
+.sens-view text {
+  margin: 20rpx;
+  font-size: 14px;
+  font-weight: 400;
+  height: 70rpx;
+  line-height: 70rpx;
+}
+
+.sens-view input {
+  font-size: 16px;
+  margin-left: 20rpx;
+  margin-right: 20rpx;
+  margin-bottom: 16rpx;
+  padding-left: 4rpx;
+  height: 68rpx;
+  line-height: 68rpx;
+  border-bottom: 1px solid lightgray;
+}
+
+.place-show {
+  color: #ddd;
+  font-size: 16px;
+}
+
+.create-btn{
+  width: 90%;
+  border-radius: 20px;  
+  font-size:18px;
+  background-color:#ff8719;
+  border: 1px #ff8719;
+  color:white;
+  overflow:hidden;
+  height:80rpx;
+  padding-top: 3rpx;
+  line-height: 80rpx;
+  margin-top: 50rpx;
+}
+.create-hover {
+  background-color: #fca001;
+}

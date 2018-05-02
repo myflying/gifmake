@@ -1,0 +1,9 @@
+<!--pages/home/home.wxml-->
+<scroll-view>
+  <view class='gif-list'>
+    <view class='gif-item' wx:for='{{giflist}}' wx:key='id' wx:for-item="item" bindtap='create'>
+        <image class='gif-img' src='{{item.url}}' mode='aspectFill'></image>
+        <text class='gif-title'>默认标题</text>
+    </view>
+  </view>
+</scroll-view>

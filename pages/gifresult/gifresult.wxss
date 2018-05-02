@@ -1,0 +1,62 @@
+/* pages/gifresult/gifresult.wxss */
+
+page {
+  width: 100%;
+  background: #f1f1f1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.gif-result {
+  width: 100%;
+  display: flex;
+  margin-top: 30rpx;
+  margin-bottom: 30rpx;
+  justify-content: center;
+}
+
+.gif-url {
+  margin-top: 20rpx;
+  width: 460rpx;
+  height: auto;
+}
+
+.bottom_fun {
+  width: 90%;
+  display: flex;
+  margin-top: 20px;
+  flex-direction: row;
+  justify-content: space-around;
+}
+
+.home-btn {
+  width: 150rpx;
+  height: 66rpx;
+  line-height: 66rpx;
+  color: #555555;
+  font-size: 14px;
+  background: #CFCFCF;
+  border: 3px #CFCFCF;
+}
+
+.share-btn {
+  width: 150rpx;
+  height: 66rpx;
+  line-height: 66rpx;
+  color: white;
+  font-size: 14px;
+  background: #ff8719;
+  border: 3px #ff8719;
+}
+
+.down-btn {
+  width: 150rpx;
+  height: 66rpx;
+  line-height: 66rpx;
+  color: white;
+  font-size: 14px;
+  background: #32cd32;
+  border: 3px #32cd32;
+}

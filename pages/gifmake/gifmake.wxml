@@ -1,0 +1,15 @@
+<!--pages/gifmake/gifmake.wxml-->
+<scroll-view>
+  <view class='gif-show'>
+    <image class='gif-img' src='{{gifinfo.gif_img_url}}' mode='widthFix'></image>
+  </view>
+  <view class='content-show'>
+    <view class='sens-view' wx:for='{{gifinfo.data}}' wx:key='id' wx:item='{{item}}'>
+        <text>第 {{index+1}} 句</text>
+        <input type='text' placeholder='{{item.hitvalue}}' placeholder-style='place-show'></input>
+    </view>
+  </view>
+  <view>
+    <button class='create-btn' bindtap='saveImage' hover-class='create-hover'>立即生成</button>
+  </view>
+</scroll-view>
