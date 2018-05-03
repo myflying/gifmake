@@ -2,31 +2,31 @@
 
 page {
   width: 100%;
-  background: #f1f1f1;
+  background: #eeeeee;
 }
 
 .gif-show {
   width: 100%;
   display: flex;
-  margin-top: 30rpx;
+  margin-top: 36rpx;
   margin-bottom: 30rpx;
   justify-content: center;
 }
 
 .gif-img {
-  margin-top: 20rpx;
   width: 460rpx;
   height: auto;
 }
 
 .content-show {
   margin: 20rpx;
-  background: white;
-  border-radius: 6rpx;
 }
 
 .sens-view {
   height: 155rpx;
+  border-radius: 6rpx;
+  margin: 16rpx;
+  background: white;
 }
 
 .sens-view text {
@@ -45,27 +45,28 @@ page {
   padding-left: 4rpx;
   height: 68rpx;
   line-height: 68rpx;
-  border-bottom: 1px solid lightgray;
+  border-bottom: 1px solid #ccc;
 }
 
 .place-show {
-  color: #ddd;
+  color: #ccc;
   font-size: 16px;
 }
-
+.create-view{
+  margin-top: 30rpx;
+  margin-bottom: 50rpx;
+}
 .create-btn{
-  width: 90%;
-  border-radius: 20px;  
+  width: 92%;
   font-size:18px;
-  background-color:#ff8719;
-  border: 1px #ff8719;
+  background: #31b656;
+  border: 3px #31b656;
   color:white;
   overflow:hidden;
   height:80rpx;
   padding-top: 3rpx;
   line-height: 80rpx;
-  margin-top: 50rpx;
 }
 .create-hover {
-  background-color: #fca001;
+  background-color: #31b116;
 }

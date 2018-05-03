@@ -1,37 +1,55 @@
 // pages/gifmake/gifmake.js
+var gifinfo;
+var talklist;
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-
-    gifinfo: {
-      'id': '1',
-      'gif_title': '为所欲为',
-      'gif_img_url': '../images/g2.jpg',
-      data: [
-        { 'hitvalue': '我就是饿死' },
-        { 'hitvalue': '死外边，从这里跳下去' },
-        { 'hitvalue': '也不会吃你们一点东西' },
-        { 'hitvalue': '真香' }
-      ]
-    }
-
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-  
+    wx.showLoading({
+      title: '加载中',
+    })
+    console.log('gifmake id --->'+ options.id)
+    var Page$this = this;
+    wx.request({
+      url: 'https://nz.qqtn.com/zbsq/index.php?m=api&c=make_gif&a=zimu',
+      method: 'GET',
+      data: {
+        'id': options.id
+      },
+      success: function (res) {
+        wx.hideLoading()
+        gifinfo = res.data.data;
+        wx.setNavigationBarTitle({
+          title: gifinfo.name,
+        })
+        talklist = gifinfo.input_placeholder;
+        Page$this.setData({
+          gifImgUrl: gifinfo.preview_image,
+          senslist: talklist,
+          maxlength: gifinfo.zimu_num
+        })
+      },
+      fail: function (res) {
+        wx.hideLoading()
+        console.log('fail--->')
+      }
+    })
+
   },
 
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function () {
-  
+
   },
 
   /**
@@ -74,5 +92,16 @@ Page({
    */
   onShareAppMessage: function () {
   
+  },
+
+  inputChange:function(e){
+    let i = e.currentTarget.dataset.i
+    talklist[i] = e.detail.value;
+  },
+  create:function(){
+    console.log(talklist)
+    wx.navigateTo({
+      url: '/pages/gifresult/gifresult',
+    })
   }
 })

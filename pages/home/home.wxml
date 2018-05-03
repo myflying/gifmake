@@ -1,9 +1,13 @@
 <!--pages/home/home.wxml-->
 <scroll-view>
   <view class='gif-list'>
-    <view class='gif-item' wx:for='{{giflist}}' wx:key='id' wx:for-item="item" bindtap='create'>
-        <image class='gif-img' src='{{item.url}}' mode='aspectFill'></image>
-        <text class='gif-title'>默认标题</text>
+    <view class='gif-item' wx:for='{{giflist}}' wx:key='id' wx:for-item="item" bindtap='createDetail' data-id='{{item.id}}'>
+        <image class='gif-img' src='{{item.preview_image}}' mode='aspectFill'></image>
+        <text class='gif-title'>{{item.name}}</text>
     </view>
+  </view>
+  <view class='load_more'>
+    <image wx:if="{{is_load_more}}" src='../images/load_more.gif' class='load_more_image'></image>
+    <text class='is_end' wx:if="{{is_end}}">没有更多数据</text>
   </view>
 </scroll-view>

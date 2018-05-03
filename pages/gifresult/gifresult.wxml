@@ -3,7 +3,7 @@
   <image class='gif-url' src='../images/g2.jpg' mode='widthFix'></image>
 </view>
 <view class='bottom_fun'>
-    <button class='home-btn' bindtap='tohome'>回首页</button>
-    <button class='share-btn' bindtap='toshare'>分享</button>
-    <button class='down-btn' bindtap='downimage'>下载</button>
+    <button class='save-btn' hover-class='save-hover' bindtap='downimage'>保存</button>
+    <button class='share-btn' hover-class='share-hover' open-type='share'>分享</button>
+    <button class='more-btn' hover-class='more-hover' bindtap='tohome'>查看更多素材</button>
 </view>

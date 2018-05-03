@@ -1,15 +1,16 @@
 {
   "pages":[
     "pages/home/home",
-    "pages/gifresult/gifresult",
     "pages/gifmake/gifmake",
+    "pages/gifresult/gifresult",
     "pages/index/index",
     "pages/logs/logs"
   ],
   "window":{
     "backgroundTextStyle":"light",
-    "navigationBarBackgroundColor": "#fff",
+    "navigationBarBackgroundColor": "#ffa200",
     "navigationBarTitleText": "WeChat",
-    "navigationBarTextStyle":"black"
+    "navigationBarTextStyle":"white",
+    "onReachBottomDistance": "20rpx"
   }
 }
