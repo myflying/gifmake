@@ -1,19 +1,13 @@
 // pages/home/home.js
 var list
 var page
-var pSize = 10
+var pSize = 50
 var end = false
 Page({
   /**
    * 页面的初始数据
    */
   data: {
-    giflist: [
-      { 'url': '../images/g1.jpg' },
-      { 'url': '../images/g2.jpg' },
-      { 'url': '../images/g3.jpg' },
-      { 'url': '../images/g4.jpg' }
-    ],
     is_load_more: false,
     is_end: end
   },
@@ -32,6 +26,9 @@ Page({
     this.getData(Page$this);
   },
   getData: function (that) {
+    wx.showLoading({
+      title: '加载中',
+    })
     wx.request({
       url: 'https://nz.qqtn.com/zbsq/index.php?m=api&c=make_gif&a=templist',
       method: 'GET',
@@ -40,6 +37,7 @@ Page({
         'page_size': pSize
       },
       success: function (res) {
+        wx.hideLoading()
         wx.stopPullDownRefresh();
         
         if(page == 1){
@@ -58,6 +56,7 @@ Page({
         });
       },
       fail: function (res) {
+        wx.hideLoading()
         wx.stopPullDownRefresh()
       }
     })

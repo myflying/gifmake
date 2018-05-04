@@ -8,6 +8,6 @@
   </view>
   <view class='load_more'>
     <image wx:if="{{is_load_more}}" src='../images/load_more.gif' class='load_more_image'></image>
-    <text class='is_end' wx:if="{{is_end}}">没有更多数据</text>
+    <text class='is_end' wx:if="{{is_end}}">更多内容GIF君正在努力更新ing...</text>
   </view>
 </scroll-view>

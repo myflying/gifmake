@@ -18,8 +18,8 @@ page {
 }
 
 .gif-url {
-  width: 460rpx;
-  height: auto;
+  width: 260px;
+  height:148px;
 }
 
 .bottom_fun {
@@ -71,4 +71,31 @@ page {
 }
 .more-hover{
   background: #eea200;
+}
+.hit-show{
+  width: 90%;
+  background: white;
+  border: 3px white;
+  border-radius: 4px;
+  display: flex;
+  margin-top: 60rpx;
+  flex-direction: column;
+  align-items: left;
+}
+.hit-text1{
+  font-size: 14px;
+  padding-left: 20rpx;
+  padding-top: 30rpx;
+  padding-bottom: 10rpx;
+}
+.hit-text2{
+  font-size: 14px;
+  padding-left: 20rpx;
+  padding-top: 10rpx;
+  padding-bottom: 10rpx;
+}
+.hit-text3{
+  font-size: 14px;
+  padding-left: 20rpx;
+  padding-bottom: 30rpx;
 }

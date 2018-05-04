@@ -53,7 +53,7 @@ page{
 }
 .is_end{
   color: #8F8F8F;
-  font-size: 12px;
-  margin-top: 20rpx;
+  font-size: 14px;
+  margin-top: 50rpx;
   margin-bottom: 20rpx;
 }

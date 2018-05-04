@@ -1,13 +1,13 @@
 // pages/gifresult/gifresult.js
 var downUrl;
-
+var titlename;
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-
+    gifurl:'../images/gif_def.gif'
   },
 
   onShareAppMessage: function (res) {
@@ -16,9 +16,9 @@ Page({
       console.log("button share--->")
     }
     return {
-      title: 'gif在线制作',
-      path: '/pages/gifresult/gifresult',
-      imageUrl: '../images/g1.jpg',
+      title: '快来在线制作你的' + titlename+'gif表情包吧！',
+      path: '/pages/gifresult/gifresult?gifpath=' + downUrl + "&name=" + titlename,
+      imageUrl: downUrl,
       success: function (res) {
         // 转发成功
         console.log('转发成功')
@@ -34,7 +34,32 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    downUrl = 'https://soy.qqtn.com/cache/wangjingze-80f1ddd4fc52a5f25047547962463589.gif';
+
+    downUrl = options.gifpath;
+    titlename = options.name;
+
+    if (downUrl.indexOf('https') == -1) {
+      downUrl = downUrl.replace('http', 'https');
+    }
+
+    wx.setNavigationBarTitle({
+      title: titlename,
+    })
+
+    var Page$this = this;
+
+    this.setData({
+      gifurl: downUrl
+    })
+
+    // wx.getImageInfo({
+    //   src: downUrl,
+    //   success:function(res){
+    //     Page$this.setData({
+    //       gifurl: res.path
+    //     })
+    //   }
+    // })
   },
 
   /**
@@ -79,19 +104,43 @@ Page({
   
   },
 
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-  
+  showImg:function(){
+    if (downUrl) {
+      wx.previewImage({
+        current: downUrl, // 当前显示图片的http链接
+        urls: [downUrl] // 需要预览的图片http链接列表
+      })
+    }
   },
+  
   downimage: function (e) {
 
-    if (downUrl.indexOf('https') == -1) {
-      downUrl = downUrl.replace('http', 'https');
-    }
     console.log("down img https--->" + downUrl);
 
+    var Page$this = this;
+
+    //获取相册授权
+    wx.getSetting({
+      success(res) {
+        if (!res.authSetting['scope.writePhotosAlbum']) {
+          wx.authorize({
+            scope:
+            'scope.writePhotosAlbum',
+            success() {
+              console.log('授权成功')
+              Page$this.downFile();
+            }
+          })
+        }else{
+          console.log("已经有授权，直接下载");
+          Page$this.downFile();
+        }
+      }
+    })
+
+  },
+
+  downFile:function(){
     //文件下载
     wx.downloadFile({
       url: downUrl,
@@ -131,7 +180,6 @@ Page({
       }
     })
   },
-
   tohome:function(){
     wx.navigateTo({
       url: '/pages/home/home',

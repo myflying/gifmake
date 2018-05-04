@@ -14,12 +14,13 @@ page {
 }
 
 .gif-img {
-  width: 460rpx;
-  height: auto;
+  width: 260px;
+  height:148px;
 }
 
 .content-show {
   margin: 20rpx;
+  min-height: 200rpx;
 }
 
 .sens-view {
