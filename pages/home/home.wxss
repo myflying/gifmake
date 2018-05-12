@@ -25,6 +25,7 @@ page{
   margin: 1%;
   justify-content: center;
   align-items: center;
+  position: relative;
 }
 
 .gif-img {
@@ -35,6 +36,13 @@ page{
   margin-right: auto;
   margin-bottom: 0px;
 }
+.gif-img-lock{
+  width: 40px;
+  height: 40px;
+  position: absolute;
+  right: 0;
+  top: 0
+}
 .gif-title{
   font-size: 14px;
   margin: 12rpx;
@@ -42,8 +50,16 @@ page{
 .load_more{
   width: 100%;
   display: flex;
+  flex-direction: column;
   justify-content: center;
+  align-items: center;
   margin: 10rpx;
+}
+.is_end{
+  color: #8F8F8F;
+  font-size: 12px;
+  margin-top: 50rpx;
+  margin-bottom: 20rpx;
 }
 .load_more_image{
   width: 400rpx;
@@ -51,11 +67,21 @@ page{
   display: flex;
   justify-content: center;
 }
-.is_end{
-  color: #8F8F8F;
+.more-version{
+  display: flex;
+  flex-direction: row;
+  margin: 16rpx;
+}
+.is-version{
+  color: #f96e48;
   font-size: 14px;
-  margin-top: 50rpx;
-  margin-bottom: 20rpx;
+  height: 22px;
+  line-height: 22px;
+}
+.version-img{
+  width: 20px;
+  height: 20px;
+  margin-left: 12rpx;
 }
 .no-data{
   display: flex;

@@ -3,12 +3,17 @@
   <view class='gif-list'>
     <view class='gif-item' wx:for='{{giflist}}' wx:key='id' wx:for-item="item" bindtap='createDetail' data-id='{{item.id}}'>
         <image class='gif-img' src='{{item.preview_image}}' mode='aspectFill'></image>
+        <image wx:if='{{item.is_lock == 1 && is_lock}}' class='gif-img-lock' src='../images/is_lock.png'></image>
         <text class='gif-title'>{{item.name}}</text>
     </view>
   </view>
   <view class='load_more'>
     <image wx:if="{{is_load_more}}" src='../images/load_more.gif' class='load_more_image'></image>
-    <text class='is_end' wx:if="{{is_end}}">更多内容GIF君正在努力更新ing...</text>
+    <text class='is_end' wx:if="{{is_end}}">更多内容小编正在努力更新</text>
+    <view class='more-version' bindtap='version'>
+      <text class='is-version' wx:if="{{is_end}}">免责声明</text>
+      <image class='version-img' src='../images/version_icon.png'></image>
+    </view>
   </view>
 </scroll-view>
 <view wx:if="{{is_nodata}}" class='no-data' bindtap='onrefresh'>
