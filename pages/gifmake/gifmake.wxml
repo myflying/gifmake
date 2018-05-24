@@ -13,7 +13,8 @@
     </view>
   </view>
   <view class='create-view'>
-    <button class='create-btn' wx:if="{{canIUse}}" open-type="getUserInfo" bindgetuserinfo="loadUserInfo"  hover-class='create-hover'>立即生成      </button>
+    <button class='create-water-btn' bindtap='watermark' hover-class='create-water-hover'>一键生成</button>
+    <button class='create-btn' bindtap='nowater'  hover-class='create-hover'>去水印生成</button>
   </view>
 
 <!--弹窗-->
@@ -22,11 +23,11 @@
   <view class="modal-title">分享给好友</view>
   <view class="modal-content">
     <view class="modal-input">
-      <text>分享给好友即可免费使用gif素材</text>
+      <text class='show-text'>快来把「GIF在线制作」分享给好友去除水印吧！</text>
     </view>
   </view>
   <view class="modal-footer">
-    <view class="btn-cancel" bindtap="onCancel" data-status="cancel">取消</view>
+    <button class="btn-cancel" bindtap="onCancel" data-status="cancel">取消</button>
     <button class="btn-confirm" open-type="share">确定</button>
   </view>
 </view>

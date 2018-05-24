@@ -6,7 +6,7 @@ var page
 var pSize = 50
 var end = false
 var nodata = false
-var lock = true;
+
 Page({
   /**
    * 页面的初始数据
@@ -14,8 +14,7 @@ Page({
   data: {
     is_load_more: false,
     is_end: end,
-    is_nodata: nodata,
-    is_lock :true
+    is_nodata: nodata
   },
 
   /**
@@ -25,30 +24,15 @@ Page({
     wx.setNavigationBarTitle({
       title: 'GIF在线制作',
     })
-    
-    if(wx.getStorageSync('is_lock') == '' && typeof wx.getStorageSync('is_lock') == 'string'){
-      lock = true
-    }else{
-      lock = wx.getStorageSync('is_lock')
-    }
-
-    console.log('home--->' + lock)
-    this.setData({
-      is_lock:lock
+    wx.showLoading({
+        title: '正在加载...',
+        mask: true
     })
-    page = 1;
-    list = null;
-    var Page$this = this;
-    this.getData(Page$this);
+    this.onrefresh();
   },
 
-  getData: function (that) {
-
-    console.log('getData--->')
-
-    wx.showLoading({
-      title: '加载中',
-    })
+  getData: function () {
+    var that = this;
     wx.request({
       url: 'https://nz.qqtn.com/zbsq/index.php?m=api&c=make_gif&a=templist',
       method: 'GET',
@@ -57,9 +41,7 @@ Page({
         'page_size': pSize
       },
       success: function (res) {
-        wx.hideLoading()
-        wx.stopPullDownRefresh();
-
+        wx.hideLoading();
         if(page == 1){
           list = res.data.data;
         }else{
@@ -79,11 +61,13 @@ Page({
         that.setData({
           giflist: list,
           is_end : end,
-          is_nodata : nodata
+          is_nodata : nodata,
+          is_version_show:true
         });
+        wx.stopPullDownRefresh();
       },
       fail: function (res) {
-        wx.hideLoading()
+        wx.hideLoading();
         wx.stopPullDownRefresh()
       }
     })
@@ -91,8 +75,7 @@ Page({
   onrefresh:function(){
     page = 1;
     list = null;
-    var Page$this = this;
-    this.getData(Page$this);
+    this.getData();
   },
   /**
    * 页面相关事件处理函数--监听用户下拉动作
@@ -100,8 +83,7 @@ Page({
   onPullDownRefresh: function () {
     page = 1;
     list = null;
-    var Page$this = this;
-    this.getData(Page$this);
+    this.getData();
   },
 
   /**

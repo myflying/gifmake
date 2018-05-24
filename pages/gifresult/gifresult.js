@@ -7,6 +7,7 @@ Page({
    * 页面的初始数据
    */
   data: {
+    showModalStatus:true,
     gifurl:'../images/gif_def.gif'
   },
 
@@ -48,18 +49,18 @@ Page({
 
     var Page$this = this;
 
-    this.setData({
-      gifurl: downUrl
-    })
-
-    // wx.getImageInfo({
-    //   src: downUrl,
-    //   success:function(res){
-    //     Page$this.setData({
-    //       gifurl: res.path
-    //     })
-    //   }
+    // this.setData({
+    //   gifurl: downUrl
     // })
+
+    wx.getImageInfo({
+      src: downUrl,
+      success:function(res){
+        Page$this.setData({
+          gifurl: res.path
+        })
+      }
+    })
   },
 
   /**
@@ -117,26 +118,51 @@ Page({
 
     console.log("down img https--->" + downUrl);
 
-    var Page$this = this;
-
-    //获取相册授权
-    wx.getSetting({
-      success(res) {
-        if (!res.authSetting['scope.writePhotosAlbum']) {
-          wx.authorize({
-            scope:
-            'scope.writePhotosAlbum',
-            success() {
-              console.log('授权成功')
-              Page$this.downFile();
-            }
+    var show_tip;
+    wx.getStorage({
+      key: 'show_tip',
+      success: function (res) {
+        show_tip = res.data;
+        console.log(show_tip);
+        //到提示用户保存页面
+        if(show_tip){
+          wx.navigateTo({
+            url: '../gifshow/gifshow?gifpath=' + downUrl,
           })
         }else{
-          console.log("已经有授权，直接下载");
-          Page$this.downFile();
+          wx.previewImage({
+            urls: [downUrl],
+            current: downUrl
+          })
         }
+      },
+      fail:function(){
+        wx.navigateTo({
+          url: '../gifshow/gifshow?gifpath=' + downUrl,
+        })
       }
     })
+
+    // var Page$this = this;
+
+    // //获取相册授权
+    // wx.getSetting({
+    //   success(res) {
+    //     if (!res.authSetting['scope.writePhotosAlbum']) {
+    //       wx.authorize({
+    //         scope:
+    //         'scope.writePhotosAlbum',
+    //         success() {
+    //           console.log('授权成功')
+    //           Page$this.downFile();
+    //         }
+    //       })
+    //     }else{
+    //       console.log("已经有授权，直接下载");
+    //       Page$this.downFile();
+    //     }
+    //   }
+    // })
 
   },
 

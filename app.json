@@ -3,6 +3,7 @@
     "pages/home/home",
     "pages/gifmake/gifmake",
     "pages/gifresult/gifresult",
+    "pages/gifshow/gifshow",
     "pages/index/index",
     "pages/logs/logs"
   ],
@@ -11,6 +12,7 @@
     "navigationBarBackgroundColor": "#ffa200",
     "navigationBarTitleText": "WeChat",
     "navigationBarTextStyle":"white",
+    "backgroundColor": "#eeeeee",
     "onReachBottomDistance": "20rpx"
   }
 }

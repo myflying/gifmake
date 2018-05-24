@@ -8,7 +8,9 @@ var id;
 var code;
 var encryptedData;
 var iv;
-var isUse = false;
+var ids;
+var is_share = false;
+
 Page({
 
   /**
@@ -25,6 +27,9 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    is_share = false;
+    id = options.id;
+    console.log('gifmake id --->' + options.id)
 
     // 登录
     wx.login({
@@ -33,11 +38,11 @@ Page({
         code = res.code
       }
     })
+
     wx.showLoading({
       title: '加载中',
     })
-    id = options.id;
-    console.log('gifmake id --->'+ options.id)
+
     var Page$this = this;
     wx.request({
       url: 'https://nz.qqtn.com/zbsq/index.php?m=api&c=make_gif&a=zimu',
@@ -48,12 +53,12 @@ Page({
       success: function (res) {
         wx.hideLoading()
         gifinfo = res.data.data;
-        //console.log(gifinfo)
+        console.log(gifinfo)
         wx.setNavigationBarTitle({
           title: gifinfo.name,
         })
         talklist = gifinfo.input_placeholder;
-        isUse = gifinfo.is_lock;
+        
         oldList = [].concat(talklist);
         Page$this.setData({
           gifImgUrl: gifinfo.preview_image,
@@ -69,38 +74,44 @@ Page({
     })
   },
 
-  loadUserInfo: function (e) {
-    var Page$this = this;
-    
-    var lock = true;
-    console.log(typeof wx.getStorageSync('is_lock'))
+  onShow: function () {
+    wx.getStorage({
+      key: 'gif_ids',
+      success: function (res) {
 
-    if (wx.getStorageSync('is_lock') == '' && typeof wx.getStorageSync('is_lock') == 'string') {
-      lock = true
-    } else {
-      lock = wx.getStorageSync('is_lock')
-    }
-    console.log('make--->' + lock)
-    if(isUse == 1){
-      if (lock) {
-        wx.getUserInfo({
-          success: function (res) {
-            Page$this.data.userinfo = res.userInfo
-            console.log(res.userInfo)
-            encryptedData = res.encryptedData;
-            iv = res.iv;
-
-            //获取用户信息之后登录
-            Page$this.userLogin(Page$this);
+        ids = res.data;
+        var idsArray = ids.split(',');
+        console.log(idsArray);
+        for (let i = 0; i < idsArray.length; i++) {
+          if (id && id == parseInt(idsArray[i])) {
+            is_share = true;
           }
-        })
-      }else{
-        this.create();
+        }
       }
-    }else{
-      this.create();
-    }
+    })
   },
+
+  // loadUserInfo: function (e) {
+  //   var Page$this = this;
+
+  //   if (isShare) {
+  //     this.create(false);
+  //   }else{
+  //     wx.getUserInfo({
+  //       success: function (res) {
+  //         Page$this.data.userinfo = res.userInfo
+  //         console.log(res.userInfo)
+  //         encryptedData = res.encryptedData;
+  //         iv = res.iv;
+
+  //         Page$this.setData({
+  //           showModal: true
+  //         });
+
+  //       }
+  //     })
+  //   }
+  // },
 
   inputChange:function(e){
     let i = e.currentTarget.dataset.i
@@ -112,33 +123,51 @@ Page({
       talklist[i] = oldinput;
     }
   },
-
+  //一键生成(默认带水印)
+  watermark:function(){
+    this.create(true);
+  },
+  
+   //去水印生成
+  nowater:function(){
+    if (is_share){
+      wx.showLoading({
+        title: '生成中',
+      })
+      this.create(false);
+    }else{
+      this.setData({
+        showModal: true
+      });
+    }
+  },
   //制作
-  create:function(){
+  create:function(iswater){
     var params = talklist.toString();
     params = params.replace(/,/g,'%#');
 
     console.log(params)
-
-    wx.showLoading({
-      title: '生成中',
-    })
-
+    if(iswater){
+      wx.showLoading({
+        title: '生成中',
+      })
+    }
+    
     wx.request({
       url: 'https://nz.qqtn.com/zbsq/index.php?m=api&c=make_gif&a=create',
       method: 'GET',
       data: {
         'id': id,
-        'inputs': params
+        'inputs': params,
+        'is_water': iswater ? 1 : 0
       },
       success: function (res) {
         wx.hideLoading()
         if (res.data.code == 1){
           var gifpath = res.data.data.path;
-          console.log(gifpath);
-
+          console.log('生成的gif路径--->'+gifpath);
           wx.navigateTo({
-            url: '/pages/gifresult/gifresult?gifpath=' + gifpath + "&name=" + gifinfo.name,
+            url: '/pages/gifresult/gifresult?gifpath=' + gifpath + "&name=" + gifinfo.name
           })
         }else{
           wx.showToast({
@@ -167,6 +196,11 @@ Page({
     this.setData({
       showModal: false
     });
+
+    wx.setStorage({
+      key: "is_share",
+      data: false
+    })
   },
   /**
    * 对话框取消按钮点击事件
@@ -180,77 +214,85 @@ Page({
    */
   onShareAppMessage: function () {
     var Page$this = this;
+
+    if(ids){
+      wx.setStorage({
+        key: 'gif_ids',
+        data: ids + "," + id
+      })
+    }else{
+      wx.setStorage({
+        key: 'gif_ids',
+        data: id,
+      })
+    }
+
+    wx.getStorage({
+      key: 'gif_ids',
+      success: function(res) {
+        console.log('share ids --->' + res.data)
+      },
+    })
+
+    setTimeout(function () {
+        Page$this.create(false)
+    }, 2000);
+    
+    wx.showLoading({
+      title: '生成中',
+    })
+
+    this.setData({
+      showModal: false
+    });
     return {
       title: 'gif在线制作',
       path: '/pages/home/home',
-      imageUrl: '',
-      success: function (res) {
-        wx.showToast({
-          title: '分享成功',
-        })
-        // 转发成功
-        console.log('转发成功')
-
-        wx.setStorage({
-          key: "is_lock",
-          data: false
-        })
-
-        Page$this.setData({
-          showModal: false
-        })
-        Page$this.userLogin(Page$this);
-      },
-      fail: function (res) {
-        // 转发失败
-        console.log('转发失败')
-        wx.showToast({
-          title: '分享失败',
-        })
-      }
+      imageUrl: gifinfo.preview_image
     }
+
   },
 
-  userLogin:function(that){
-    console.log(code + '---' + encryptedData + '---' + iv)
-    wx.request({
-      url: 'https://nz.qqtn.com/zbsq/index.php?m=api&c=make_gif&a=init',
-      //注册
-      data: {
-        'code': code,
-        'encryptedData': encryptedData,
-        'iv': iv,
-      },
-      method: 'GET',
-      success: function (result) {
-        console.log(result.data)
-        if(result && result.data){
-          if(result.data.code == 1){
-            console.log("登录成功")
-            if (result.data.data.is_share == 1){
-              wx.setStorage({
-                key: "is_lock",
-                data: false
-              })
+  // userLogin:function(that){
+  //   console.log(code + '---' + encryptedData + '---' + iv)
+  //   wx.request({
+  //     url: 'https://nz.qqtn.com/zbsq/index.php?m=api&c=make_gif&a=init',
+  //     //注册
+  //     data: {
+  //       'code': code,
+  //       'encryptedData': encryptedData,
+  //       'iv': iv,
+  //     },
+  //     method: 'GET',
+  //     success: function (result) {
+  //       console.log(result.data)
+  //       that.setData({
+  //         showModal: false
+  //       });
+  //       if(result && result.data){
+  //         if(result.data.code == 1){
+  //           console.log("登录成功")
 
-              that.create();
-            }else{
-              that.setData({
-                showModal: true
-              })
-            }
+  //           wx.setStorage({
+  //             key: "is_share",
+  //             data: true
+  //           })
+  //           that.create(false);
 
-          }else{
-            console.log("登录失败")
-          }
-        }else{
-          console.log("登录失败")
-        }
-      },
-      fail: function (res) {
-        console.log("登录失败")
-      },
-    })
-  }
+  //         }else{
+  //           console.log("登录失败")
+  //         }
+  //       }else{
+  //         console.log("登录失败")
+  //       }
+  //     },
+  //     fail: function (res) {
+  //       that.setData({
+  //         showModal: false
+  //       });
+  //       console.log("登录失败")
+  //     },
+  //   })
+  // }
 
 })

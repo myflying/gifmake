@@ -3,12 +3,7 @@
   <image class='gif-url' src='{{gifurl}}' bindtap='showImg' mode='widthFix'></image>
 </view>
 <view class='bottom_fun'>
-    <button class='save-btn' hover-class='save-hover' bindtap='downimage'>保存</button>
-    <button class='share-btn' hover-class='share-hover' open-type='share'>分享</button>
+    <button class='share-btn' hover-class='share-hover' open-type='share'>分享转发</button>
+    <button class='save-btn' hover-class='save-hover' bindtap='downimage'>保存本地</button>
     <button class='more-btn' hover-class='more-hover' bindtap='tohome'>查看更多素材</button>
-</view>
-<view class='hit-show'>
-    <text class='hit-text1'>苹果手机保存说明：</text>
-    <text class='hit-text2'>1、点击做好的GIF图，进入图片预览</text>
-    <text class='hit-text3'>2、在预览界面长按图片保存到本地相册</text>
 </view>
