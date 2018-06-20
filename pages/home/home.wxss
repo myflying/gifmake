@@ -9,7 +9,6 @@ page{
   height: 100%;
   overflow-x: hidden;
 }
-
 .gif-list {
   width: 100%;
   display: flex;
@@ -18,11 +17,16 @@ page{
   margin-left: 1%;
   margin-top: 12rpx;
 }
-.ad-view{
+.ad{
   width: 96%;
-  margin-left: 2%;
-  margin-right: 2%;
-  margin-top: 12rpx;
+  margin-left: 10rpx;
+  margin-right: 26rpx;
+  margin-top: 6rpx;
+  margin-bottom: 6rpx;
+}
+.ad-show{
+  width: 100%;
+  height: 100%;
 }
 
 .gif-item {

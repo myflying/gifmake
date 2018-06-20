@@ -1,12 +1,15 @@
 <!--pages/home/home.wxml-->
 <view wx:if="{{!is_nodata}}" class="content">
-  <view class='ad-view'><ad unit-id="adunit-4461ed98b8587c6e"></ad></view>
   <view class='gif-list'>
-    <view class='gif-item' wx:for='{{giflist}}' wx:key='id' wx:for-item="item" bindtap='createDetail' data-id='{{item.id}}'>
-        <image class='gif-img' src='{{item.preview_image}}' mode='aspectFill'></image>
-        <text class='gif-title'>{{item.name}}</text>
-    </view>
+    <block wx:for='{{giflist}}' wx:key='id' wx:for-item="item">
+      <view wx:if='{{ (index) % 8 == 0 && index > 0}}' class='ad'><ad unit-id="adunit-4461ed98b8587c6e" class="ad-show"></ad></view>
+      <view class='gif-item' bindtap='createDetail' data-id='{{item.id}}'>
+          <image class='gif-img' src='{{item.preview_image}}' mode='aspectFill'></image>
+          <text class='gif-title'>{{item.name}}</text>
+      </view>
+    </block>
   </view>
+  
   <view class='load_more'>
     <image wx:if="{{is_load_more}}" src='../images/load_more.gif' class='load_more_image'></image>
     <text class='is_end' wx:if="{{is_end}}">更多内容小编正在努力更新</text>

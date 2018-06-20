@@ -10,7 +10,7 @@ var encryptedData;
 var iv;
 var ids;
 var is_share = false;
-
+var formId;
 Page({
 
   /**
@@ -123,6 +123,17 @@ Page({
       talklist[i] = oldinput;
     }
   },
+
+  formSubmit:function(e) {
+    formId = e.detail.formId;
+    let iswater = e.detail.target.dataset.iswater
+    if(iswater == 0){
+      this.nowater()
+    }else{
+      this.watermark()
+    }
+  },
+
   //一键生成(默认带水印)
   watermark:function(){
     this.create(true);
@@ -159,15 +170,18 @@ Page({
       data: {
         'id': id,
         'inputs': params,
-        'is_water': iswater ? 1 : 0
+        'is_water': iswater ? 1 : 0,
+        'openid':wx.getStorageSync('openid'),
+        'formid': formId
       },
       success: function (res) {
+        console.log(res.data)
         wx.hideLoading()
         if (res.data.code == 1){
           var gifpath = res.data.data.path;
           console.log('生成的gif路径--->'+gifpath);
           wx.navigateTo({
-            url: '/pages/gifresult/gifresult?gifpath=' + gifpath + "&name=" + gifinfo.name
+            url: '/pages/gifresult/gifresult?gifpath=' + gifpath + "&name=" + gifinfo.name + "&stitle=" + gifinfo.share_title + "&simg=" + gifinfo.share_img
           })
         }else{
           wx.showToast({
@@ -246,9 +260,9 @@ Page({
       showModal: false
     });
     return {
-      title: 'gif在线制作',
+      title: '抱歉，有了GIF在线制作真的可以为所欲为！',
       path: '/pages/home/home',
-      imageUrl: gifinfo.preview_image
+      imageUrl: '/pages/images/share_default.png'
     }
 
   },

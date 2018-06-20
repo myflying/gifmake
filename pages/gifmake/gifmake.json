@@ -1,1 +1,6 @@
-{}
+{
+  "usingComponents": {
+    "sbutton": "/compoents/scale_button/scale_button",
+    "dialog": "/compoents/dialog/dialog"
+  }
+}

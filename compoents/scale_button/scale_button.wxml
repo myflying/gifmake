@@ -1,0 +1,4 @@
+<!--compoents/scale_button.wxml-->
+<view animation="{{animationData}}" bindtouchstart='start' bindtouchend='end' bindtouchcancel='end'>
+<slot></slot>
+</view>

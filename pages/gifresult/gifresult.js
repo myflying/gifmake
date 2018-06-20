@@ -1,6 +1,8 @@
 // pages/gifresult/gifresult.js
 var downUrl;
 var titlename;
+var stitle;
+var simg;
 Page({
 
   /**
@@ -17,9 +19,9 @@ Page({
       console.log("button share--->")
     }
     return {
-      title: '快来在线制作你的' + titlename+'gif表情包吧！',
+      title: stitle,
       path: '/pages/gifresult/gifresult?gifpath=' + downUrl + "&name=" + titlename,
-      imageUrl: downUrl,
+      imageUrl: simg,
       success: function (res) {
         // 转发成功
         console.log('转发成功')
@@ -38,7 +40,9 @@ Page({
 
     downUrl = options.gifpath;
     titlename = options.name;
-
+    stitle = options.stitle || '快来制作你的GIF表情包吧!';
+    simg = options.simg || '/pages/images/share_default.png'
+    console.log(simg)
     if (downUrl.indexOf('https') == -1) {
       downUrl = downUrl.replace('http', 'https');
     }
@@ -207,7 +211,7 @@ Page({
     })
   },
   tohome:function(){
-    wx.navigateTo({
+    wx.reLaunch({
       url: '/pages/home/home',
     })
   }

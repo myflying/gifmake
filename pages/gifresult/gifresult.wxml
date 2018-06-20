@@ -7,3 +7,4 @@
     <button class='save-btn' hover-class='save-hover' bindtap='downimage'>保存本地</button>
     <button class='more-btn' hover-class='more-hover' bindtap='tohome'>查看更多素材</button>
 </view>
+<view class='ad'><ad unit-id="adunit-bc60470d18ecddf4" class="ad-show"></ad></view>

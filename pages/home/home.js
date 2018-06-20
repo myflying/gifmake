@@ -6,7 +6,7 @@ var page
 var pSize = 50
 var end = false
 var nodata = false
-
+var code
 Page({
   /**
    * 页面的初始数据
@@ -29,8 +29,44 @@ Page({
         mask: true
     })
     this.onrefresh();
+    var that = this
+
+    wx.getStorage({
+      key: 'openid',
+      success: function(res) {
+        console.log('已经存在openid--->' + res.data)
+      },
+      fail:function(e){
+        // 登录
+        wx.login({
+          success: res => {
+            // 发送 res.code 到后台换取 openId, sessionKey, unionId
+            code = res.code
+            that.getOpenid(code);
+          }
+        })
+      }
+    })
   },
 
+  getOpenid:function(wcode){
+    wx.request({
+      url: 'https://nz.qqtn.com/zbsq/index.php?m=api&c=make_gif&a=init',
+      //注册
+      data: {
+        'code': wcode
+      },
+      method: 'GET',
+      success: function (result) {
+        let openid = result.data.openid;
+        console.log('新获取openid--->' + openid)
+        wx.setStorage({
+          key: 'openid',
+          data: openid,
+        })
+      }
+    })
+  },
   getData: function () {
     var that = this;
     wx.request({
@@ -54,6 +90,8 @@ Page({
           end = true;
         }
         
+        console.log('end--->' + end)
+
         if(list == null || list.length == 0){
           nodata = true;
         }
@@ -102,9 +140,9 @@ Page({
    */
   onShareAppMessage: function () {
     return {
-      title: 'gif在线制作',
+      title: '抱歉，有了GIF在线制作真的可以为所欲为！',
       path: '/pages/home/home',
-      imageUrl: '',
+      imageUrl: '/pages/images/share_default.png',
       success: function (res) {
         // 转发成功
         console.log('转发成功')
